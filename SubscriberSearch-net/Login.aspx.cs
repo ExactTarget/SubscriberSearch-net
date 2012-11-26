@@ -28,12 +28,17 @@ namespace SubscriberSearch_net
                     // Decoded request using JWT.cs in the project that leverages https://github.com/johnsheehan/jwt
                     String decodedJWT = JsonWebToken.Decode(encodedJWT, applicationSecret);
 
-                    // Store encoded and decoded JWT in sesssion variables
+                    // Store encoded and decoded JWT in sesssion variables for step 1 display only
                     Session["EncodedJWT"] = encodedJWT.Trim();
                     Session["DecodedJWT"] = decodedJWT.Trim();
 
-                    // Redirect to the Default.aspx file
-                    Response.Redirect("Default.aspx");
+                    // Parsed request into JSON object using Newtonsoft.Json.Linq library in bin folder
+                    JObject parsedJWT = JObject.Parse(decodedJWT);
+                    Session["internalOauthToken"] = parsedJWT["request"]["user"]["internalOauthToken"].Value<string>().Trim();
+                    Session["oauthToken"] = parsedJWT["request"]["user"]["oauthToken"].Value<string>().Trim();
+
+                    // Redirect to the application redirectURL specified in App Center
+                    Response.Redirect(parsedJWT["request"]["application"]["redirectUrl"].Value<string>().Trim());
                 }
                 else
                     lblMessage.Text = "JWT not provided!";

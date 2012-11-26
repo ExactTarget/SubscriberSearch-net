@@ -17,8 +17,11 @@ namespace SubscriberSearch_net
             {
                 lblMessage.Visible = false;
                 lblMessage.Text = "";
+                lblMessage.ForeColor = System.Drawing.Color.Black;
 
-                // Get the decoded JWT for parsing
+                /************************************************************************************
+                // Step 1 code only to show JWT
+                // Get the SOAP EndPoint
                 String decodedJWT = Session["DecodedJWT"].ToString();
 
                 // Parse decoded JWT into JSON object string using Newtonsoft.Json.Linq library in bin folder
@@ -28,11 +31,23 @@ namespace SubscriberSearch_net
                 // Output the encoded and decoded JWT
                 lblEncodedJWT.Text = Session["EncodedJWT"].ToString().Trim();
                 lblDecodedJWT.Text = parsedJWT;
+                *************************************************************************************/
+
+                // Get access (oAuth) token store in session from Login page and make REST call (REST.cs)
+                String strAccessToken = System.Web.HttpContext.Current.Session["oauthToken"].ToString();
+                String strSOAPEndPoint = REST.REST_GetSOAPEndpointCall(strAccessToken); 
+
+                // Save SOAP EndPoint to session
+                Session["SOAPEndPoint"] = strSOAPEndPoint.Trim();
+                lblMessage.Visible = true;
+                lblMessage.Text = strSOAPEndPoint.Trim();
+
             }
             catch (Exception ex)
             {
                 lblMessage.Text = "Error Occurred: " + ex.Message;
                 lblMessage.Visible = true;
+                lblMessage.ForeColor = System.Drawing.Color.Red;
             }
         }
     }

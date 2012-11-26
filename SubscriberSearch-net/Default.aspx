@@ -11,11 +11,12 @@
     <div>
         <br />
         <asp:Label ID="lblMessage" runat="server" Text="" Visible="false"></asp:Label>
+        <!-- Step 1 Output 
         <strong>Encoded JWT</strong><br />
         <asp:Label ID="lblEncodedJWT" runat="server" Text=""></asp:Label>
         <br /><br />
         <strong>Decoded JWT</strong><br />
-        <asp:Label ID="lblDecodedJWT" runat="server" Text=""></asp:Label>
+        <asp:Label ID="lblDecodedJWT" runat="server" Text=""></asp:Label> -->
     </div>
     </form>
 </body>
