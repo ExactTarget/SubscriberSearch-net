@@ -39,8 +39,13 @@ namespace SubscriberSearch_net
 
                 // Save SOAP EndPoint to session
                 Session["SOAPEndPoint"] = strSOAPEndPoint.Trim();
+                
+                /************************************************************************************
+                // Step 2 code only to show SOAP EndPoint
+                // Get the SOAP EndPoint
                 lblMessage.Visible = true;
                 lblMessage.Text = strSOAPEndPoint.Trim();
+                *************************************************************************************/
 
             }
             catch (Exception ex)
