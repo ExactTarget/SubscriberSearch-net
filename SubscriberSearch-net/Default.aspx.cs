@@ -15,44 +15,20 @@ namespace SubscriberSearch_net
         {
             try
             {
-                lblMessage.Visible = false;
-                lblMessage.Text = "";
-                lblMessage.ForeColor = System.Drawing.Color.Black;
+                // If first time to page make the REST call to get the SOAP end point and post to Session variable
+                if (!Page.IsPostBack)
+                {
+                    // Get access (oAuth) token store in session from Login page and make REST call (REST.cs)
+                    String strAccessToken = System.Web.HttpContext.Current.Session["oauthToken"].ToString();
+                    String strSOAPEndPoint = REST.REST_GetSOAPEndpointCall(strAccessToken);
 
-                /************************************************************************************
-                // Step 1 code only to show JWT
-                // Get the SOAP EndPoint
-                String decodedJWT = Session["DecodedJWT"].ToString();
-
-                // Parse decoded JWT into JSON object string using Newtonsoft.Json.Linq library in bin folder
-                string parsedJWT = JObject.Parse(decodedJWT).ToString(Newtonsoft.Json.Formatting.Indented);
-                parsedJWT = parsedJWT.Replace(System.Environment.NewLine, "<br>");
-
-                // Output the encoded and decoded JWT
-                lblEncodedJWT.Text = Session["EncodedJWT"].ToString().Trim();
-                lblDecodedJWT.Text = parsedJWT;
-                *************************************************************************************/
-
-                // Get access (oAuth) token store in session from Login page and make REST call (REST.cs)
-                String strAccessToken = System.Web.HttpContext.Current.Session["oauthToken"].ToString();
-                String strSOAPEndPoint = REST.REST_GetSOAPEndpointCall(strAccessToken); 
-
-                // Save SOAP EndPoint to session
-                Session["SOAPEndPoint"] = strSOAPEndPoint.Trim();
-                
-                /************************************************************************************
-                // Step 2 code only to show SOAP EndPoint
-                // Get the SOAP EndPoint
-                lblMessage.Visible = true;
-                lblMessage.Text = strSOAPEndPoint.Trim();
-                *************************************************************************************/
-
+                    // Save SOAP EndPoint to session
+                    System.Web.HttpContext.Current.Session["SOAPEndPoint"] = strSOAPEndPoint.Trim();
+                }
             }
             catch (Exception ex)
             {
-                lblMessage.Text = "Error Occurred: " + ex.Message;
-                lblMessage.Visible = true;
-                lblMessage.ForeColor = System.Drawing.Color.Red;
+                throw ex;
             }
         }
     }

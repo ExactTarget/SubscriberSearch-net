@@ -38,6 +38,8 @@
       <HintPath>dll\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System" />
@@ -52,10 +54,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="datasource.js" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="Newtonsoft.Json.dll" />
+    <None Include="Service References\ExactTargetClient\configuration91.svcinfo" />
+    <None Include="Service References\ExactTargetClient\configuration.svcinfo" />
+    <None Include="Service References\ExactTargetClient\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -65,8 +74,53 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.APIObject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.ConfigureResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.CreateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.DeleteResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.ExecuteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.ExtractResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.ObjectDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.PerformResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.ScheduleResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.SystemStatusResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.UpdateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExactTargetClient\SubscriberSearch_net.ExactTargetClient.VersionInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <Content Include="SubscriberSearch.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service References\ExactTargetClient\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SubscriberSearch.ashx.cs">
+      <DependentUpon>SubscriberSearch.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -91,6 +145,16 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="REST.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ExactTargetClient\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ExactTargetClient\etframework.wsdl" />
+    <None Include="Service References\ExactTargetClient\ETFrameworkFault.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
