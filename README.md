@@ -10,6 +10,10 @@ The full application allows the user to search their ExactTarget subscriber list
 This application was built in steps and they are [tagged](https://github.com/ExactTarget/SubscriberSearch-net/tags)  so that you can get the final application or just specific code.
 
 Step1 - Created the basic app and implemented the JWT for display in Interactive Marketing Hub
+Step2 - Added Fuel REST API request to platform service to store and display SOAP URL returned from call 
+Step3 - Added Fuel UX for the user interface styling 
+Step4 - Added Search functionality to datagrid using SOAP call through handler
+Step5 - Coming Soon! Will add update subscriber functionality and SOAP call  
 
 #Requirements
 ----------
