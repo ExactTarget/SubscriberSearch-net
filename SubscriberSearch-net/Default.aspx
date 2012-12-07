@@ -11,13 +11,13 @@
 
     <!-- Fuel UX includes and script for the page below -->
     <!-- review code.exacttarget.com/devcenter/fuel-ux and code.exacttarget.com/devcenter/fuel-ux/getting-started -->
-    <link href="http://fuelux.exacttargetapps.com/fuelux-imh/2.1/css/fuelux.css" rel="stylesheet" />
-    <link href="http://fuelux.exacttargetapps.com/fuelux-imh/2.1/css/fuelux-responsive.css" rel="stylesheet" />
+    <link href="http://fuelcdn.com/fuelux-imh/2.1/css/fuelux.css" rel="stylesheet" />
+    <link href="http://fuelcdn.com/fuelux-imh/2.1/css/fuelux-responsive.css" rel="stylesheet" />
 
     <script src="datasource.js" type="text/javascript"></script> 
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-    <script src="http://fuelux.exacttargetapps.com/fuelux-imh/2.1/loader.min.js" type="text/javascript"></script>
+    <script src="http://fuelcdn.com/fuelux-imh/2.1/loader.min.js" type="text/javascript"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
 
     <!-- Logic for Datagrid -->
