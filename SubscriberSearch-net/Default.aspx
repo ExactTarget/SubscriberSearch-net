@@ -52,6 +52,34 @@
 		        renderData: true
 		    });
 
+
+		    $('.viewDetails').live('click', function () {
+		        var $url = "/SubscriberRetrieve.ashx?id=" + this.id;
+		        $.ajax({ url: $url,
+
+		            complete: function (result) {
+		                var sub = JSON.parse(result.responseText).subscribers[0];
+		                $('#subscriberDetails').html('<dl> <dt>Email</dt> <dd>' + sub.EmailAddress + '</dd> <dt>Subscriber Key</dt> <dd>' + sub.SubscriberKey + '</dd> <dt>Created</dt> <dd>' + sub.CreatedDate + '</dd> <dt>Status</dt></dl><div id="statusCombo" class="input-append dropdown combobox" style="width: 80%; margin-top: 0;"> <input class="span2" style="width: 50%;" id="statusValue" type="text" value="' + sub.Status + '"><button class="btn" data-toggle="dropdown"><i class="caret"></i></button> <ul class="dropdown-menu"> <li><a href="#">Active</a></li> <li><a href="#">Unsubscribed</a></li> </ul><button class="btn btn-primary pull-right saveStatus" id="' + sub.ID + '">Update Status</button></div>');
+		            }
+		        });
+
+		        return false;
+		    });
+
+		    $('.saveStatus').live('click', function () {
+		        var $url = "/SubscriberUpdate.ashx?id=" + this.id + "&status=" + $('#statusValue').combobox().val();
+		        $.ajax({ url: $url,
+
+		            complete: function (result) {
+		                // Once the update is complete, refresh the grid
+		                var $gridsearch = jQuery('#subscriberGrid').find('.search');
+		                var search = $gridsearch.find('input').val();
+		                $gridsearch.trigger('searched', "_RELOAD");
+		            }
+		        });
+
+		        return false;
+		    });
 		});	
 	</script>
 </head>

@@ -14,14 +14,14 @@ using SubscriberSearch_net.ExactTargetClient;
 namespace SubscriberSearch_net
 {
     /// <summary>
-    /// Summary description for SubscriberSearch
+    /// Summary description for SubscriberRetrieve
     /// </summary>
-    public class SubscriberSearch : IHttpHandler, IReadOnlySessionState 
+    public class SubscriberRetrieve : IHttpHandler, IReadOnlySessionState 
     {
 
         public void ProcessRequest(HttpContext context)
         {
-            
+
             try
             {
                 // Local Variables
@@ -29,7 +29,7 @@ namespace SubscriberSearch_net
                 String requestId = null;
                 String SOAPEndPoint = context.Session["SOAPEndPoint"].ToString();
                 String internalOauthToken = context.Session["internalOauthToken"].ToString();
-                String search = context.Request.QueryString["search"].ToString().Trim();
+                String id = context.Request.QueryString["id"].ToString().Trim();
 
                 // Create the binding for using 
                 BasicHttpBinding binding = new BasicHttpBinding();
@@ -51,29 +51,17 @@ namespace SubscriberSearch_net
                     // Setup RetrieveRequest
                     RetrieveRequest retrieveRequest = new RetrieveRequest();
                     retrieveRequest.ObjectType = "Subscriber"; //Object Type to retrieve
-                    String[] props = { "ID", "EmailAddress", "SubscriberKey", "Status" };
+                    String[] props = { "ID", "EmailAddress", "SubscriberKey", "Status", "CreatedDate" };
                     retrieveRequest.Properties = props;
 
                     // Query filter using Simplefilter.
                     SimpleFilterPart sfp = new SimpleFilterPart();
-                    sfp.Property = "SubscriberKey";
-                    sfp.SimpleOperator = SimpleOperators.like;
-                    sfp.Value = new String[] { search.Trim() };
+                    sfp.Property = "ID";
+                    sfp.SimpleOperator = SimpleOperators.equals;
+                    sfp.Value = new String[] { id };
 
-                    // Query filter using Simplefilter.
-                    SimpleFilterPart sfp2 = new SimpleFilterPart();
-                    sfp2.Property = "EmailAddress";
-                    sfp2.SimpleOperator = SimpleOperators.like;
-                    sfp2.Value = new String[] { search.Trim() };
-
-                    // Complexfilter to OR the two SimpleFilters.
-                    ComplexFilterPart cfp = new ComplexFilterPart();
-                    cfp.LeftOperand = sfp;
-                    cfp.RightOperand = sfp2;
-                    cfp.LogicalOperator = LogicalOperators.OR;
-
-                    // Use the ComplexFilter in RetrieveRequest
-                    retrieveRequest.Filter = cfp;
+                    // Use the SimpleFilter in RetrieveRequest
+                    retrieveRequest.Filter = sfp;
 
                     // Retrieve the subscribers
                     String response = client.Retrieve(retrieveRequest, out requestId, out results);
@@ -88,10 +76,11 @@ namespace SubscriberSearch_net
                             int i = 1;
                             foreach (Subscriber sub in results)
                             {
-                                strResults += @"{""ID"":" + JsonConvert.SerializeObject(sub.ID).ToString().Trim() + ", ";
+                                strResults += @"{""ID"":" + JsonConvert.SerializeObject(sub.ID.ToString()).ToString().Trim() + ", ";
                                 strResults += @"""EmailAddress"":" + JsonConvert.SerializeObject(sub.EmailAddress).ToString().Trim() + ", ";
                                 strResults += @"""SubscriberKey"":" + JsonConvert.SerializeObject(sub.SubscriberKey).ToString().Trim() + ", ";
-                                strResults += @"""Status"":" + JsonConvert.SerializeObject(sub.Status.ToString()).ToString().Trim() + " }";
+                                strResults += @"""Status"":" + JsonConvert.SerializeObject(sub.Status.ToString()).ToString().Trim() + ", ";
+                                strResults += @"""CreatedDate"":" + JsonConvert.SerializeObject(sub.CreatedDate.ToString()).ToString().Trim() + " }";
                                 if (i < results.Length)
                                     strResults += ", ";
                                 i++;
