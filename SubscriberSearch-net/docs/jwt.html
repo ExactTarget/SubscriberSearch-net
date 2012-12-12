@@ -1,0 +1,301 @@
+<!DOCTYPE html />
+
+<html>
+<head>
+	<title>JWT.cs</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link href="nocco.css" rel="stylesheet" media="all" type="text/css" />
+	<script src="prettify.js" type="text/javascript"></script>
+</head>
+<body onLoad="prettyPrint()">
+	<div id="container">
+		<div id="background"></div>
+			<div id="jump_to">
+				Jump To &hellip;
+				<div id="jump_wrapper">
+					<div id="jump_page">
+							<a class="source" href="default.aspx.html">
+								Default.aspx.cs
+							</a>
+                            <a class="source" href="default.html">
+								Default.aspx
+							</a>
+                            <a class="source" href="datasource.html">
+								datasource.js
+							</a>
+							<a class="source" href="jwt.html">
+								JWT.cs
+							</a>
+							<a class="source" href="login.aspx.html">
+								Login.aspx.cs
+							</a>
+							<a class="source" href="logout.aspx.html">
+								Logout.aspx.cs
+							</a>
+							<a class="source" href="rest.html">
+								REST.cs
+							</a>
+							<a class="source" href="subscriberretrieve.ashx.html">
+								SubscriberRetrieve.ashx.cs
+							</a>
+							<a class="source" href="subscribersearch.ashx.html">
+								SubscriberSearch.ashx.cs
+							</a>
+							<a class="source" href="subscriberupdate.ashx.html">
+								SubscriberUpdate.ashx.cs
+							</a>
+					</div>
+				</div>
+			</div>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="docs">
+						<h1>JWT.cs</h1>
+					</th>
+					<th class="code"></th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr id="section_1">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_1">&#182;</a>
+							</div>
+							
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace SubscriberSearch_net
+{
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_2">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_2">&#182;</a>
+							</div>
+							<p>JWT for .NET
+See https://github.com/johnsheehan/jwt
+This is commit f4b6d0ce78
+Written by John Sheehan
+(http://john-sheehan.com)</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_3">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_3">&#182;</a>
+							</div>
+							<p>This work is public domain.
+"The person who associated a work with this document has 
+dedicated the work to the Commons by waiving all of his
+or her rights to the work worldwide under copyright law
+and all related or neighboring legal rights he or she
+had in the work, to the extent allowable by law."</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_4">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_4">&#182;</a>
+							</div>
+							<p>For more information, please visit:
+http://creativecommons.org/publicdomain/zero/1.0/</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_5">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_5">&#182;</a>
+							</div>
+							<p></p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>    public enum JwtHashAlgorithm
+    {
+        HS256,
+        HS384,
+        HS512
+    }
+
+    public class JsonWebToken
+    {
+        private static Dictionary&lt;JwtHashAlgorithm, Func&lt;byte[], byte[], byte[]&gt;&gt; HashAlgorithms;
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_6">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_6">&#182;</a>
+							</div>
+							<p>TODO: WIP
+private static Dictionary<JwtCekEncryptionAlgorithm, Func<byte[], byte[], byte[]>> CekEncryptionAlgorithms;
+private static Dictionary<JwtPayloadEncryptionAlgorithm, Func<byte[], byte[], byte[]>> PayloadEncryptionAlgorithms;</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>
+        static JsonWebToken()
+        {
+            HashAlgorithms = new Dictionary&lt;JwtHashAlgorithm, Func&lt;byte[], byte[], byte[]&gt;&gt;
+                    {
+                           { JwtHashAlgorithm.HS256, (key, value) =&gt; { using (var sha = new HMACSHA256(key)) { return sha.ComputeHash(value); } } },
+                           { JwtHashAlgorithm.HS384, (key, value) =&gt; { using (var sha = new HMACSHA384(key)) { return sha.ComputeHash(value); } } },
+                           { JwtHashAlgorithm.HS512, (key, value) =&gt; { using (var sha = new HMACSHA512(key)) { return sha.ComputeHash(value); } } }
+                    };
+        }
+
+        public static string Encode(object payload, string key, JwtHashAlgorithm algorithm)
+        {
+            var segments = new List&lt;string&gt;();
+            var header = new { typ = &quot;JWT&quot;, alg = algorithm.ToString() };
+
+            byte[] headerBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header, Formatting.None));
+            byte[] payloadBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload, Formatting.None));
+
+            segments.Add(Base64UrlEncode(headerBytes));
+            segments.Add(Base64UrlEncode(payloadBytes));
+
+            var stringToSign = string.Join(&quot;.&quot;, segments.ToArray());
+
+            var bytesToSign = Encoding.UTF8.GetBytes(stringToSign);
+            var keyBytes = Encoding.UTF8.GetBytes(key);
+
+            byte[] signature = HashAlgorithms[algorithm](keyBytes, bytesToSign);
+            segments.Add(Base64UrlEncode(signature));
+
+            return string.Join(&quot;.&quot;, segments.ToArray());
+        }
+
+        public static string Decode(string token, string key)
+        {
+            return Decode(token, key, true);
+        }
+
+        public static string Decode(string token, string key, bool verify)
+        {
+            var parts = token.Split(&#39;.&#39;);
+            var header = parts[0];
+            var payload = parts[1];
+            byte[] crypto = Base64UrlDecode(parts[2]);
+
+            var headerJson = Encoding.UTF8.GetString(Base64UrlDecode(header));
+            var headerData = JObject.Parse(headerJson);
+            var payloadJson = Encoding.UTF8.GetString(Base64UrlDecode(payload));
+            var payloadData = JObject.Parse(payloadJson);
+
+            if (verify)
+            {
+                var bytesToSign = Encoding.UTF8.GetBytes(string.Concat(header, &quot;.&quot;, payload));
+                var keyBytes = Encoding.UTF8.GetBytes(key);
+                var algorithm = (string)headerData[&quot;alg&quot;];
+
+                var signature = HashAlgorithms[GetHashAlgorithm(algorithm)](keyBytes, bytesToSign);
+                var decodedCrypto = Convert.ToBase64String(crypto);
+                var decodedSignature = Convert.ToBase64String(signature);
+
+                if (decodedCrypto != decodedSignature)
+                {
+                    throw new ApplicationException(string.Format(&quot;Invalid signature.&quot;));
+                }
+            }
+
+            return payloadData.ToString();
+        }
+
+        private static JwtHashAlgorithm GetHashAlgorithm(string algorithm)
+        {
+            switch (algorithm)
+            {
+                case &quot;HS256&quot;: return JwtHashAlgorithm.HS256;
+                case &quot;HS384&quot;: return JwtHashAlgorithm.HS384;
+                case &quot;HS512&quot;: return JwtHashAlgorithm.HS512;
+                default: throw new InvalidOperationException(&quot;Algorithm not supported.&quot;);
+            }
+        }
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_7">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_7">&#182;</a>
+							</div>
+							<p>from JWT spec</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>        private static string Base64UrlEncode(byte[] input)
+        {
+            var output = Convert.ToBase64String(input);
+            output = output.Split(&#39;=&#39;)[0]; // Remove any trailing &#39;=&#39;s
+            output = output.Replace(&#39;+&#39;, &#39;-&#39;); // 62nd char of encoding
+            output = output.Replace(&#39;/&#39;, &#39;_&#39;); // 63rd char of encoding
+            return output;
+        }
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_8">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_8">&#182;</a>
+							</div>
+							<p>from JWT spec</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>        private static byte[] Base64UrlDecode(string input)
+        {
+            var output = input;
+            output = output.Replace(&#39;-&#39;, &#39;+&#39;); // 62nd char of encoding
+            output = output.Replace(&#39;_&#39;, &#39;/&#39;); // 63rd char of encoding
+            switch (output.Length % 4) // Pad with trailing &#39;=&#39;s
+            {
+                case 0: break; // No pad chars in this case
+                case 2: output += &quot;==&quot;; break; // Two pad chars
+                case 3: output += &quot;=&quot;; break; // One pad char
+                default: throw new System.Exception(&quot;Illegal base64url string!&quot;);
+            }
+            var converted = Convert.FromBase64String(output); // Standard base64 decoder
+            return converted;
+        }
+
+    }
+
+}
+</code></pre>
+						</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

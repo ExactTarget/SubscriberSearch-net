@@ -13,7 +13,7 @@
         root.SubscriberSearchDataSource = factory();
     }
 } (this, function () {
-
+    // Data source object 
     var SubscriberSearchDataSource = function (options) {
         this._formatter = options.formatter;
         this._columns = options.columns;
@@ -41,6 +41,7 @@
                     if (options.search != '_RELOAD') {
                         searchTerm = options.search;
                     }
+                    // Call search handler and use results to populate data source and refresh data grid.
                     var $url = "SubscriberSearch.ashx?search=" + searchTerm;
                     $.ajax($url).done(function (response) {
                         var data = JSON.parse(response).subscribers;
@@ -52,13 +53,14 @@
                 }
 
             } else {
-                // No search. Return zero results to Datagrid
+                // No search. Return zero results to Datagrid.
                 callback({ data: [], start: 0, end: 0, count: 0, pages: 0, page: 0 });
             }
 
         }
     }
 
+    // Set the data grid attributes around indexing and paging.
     function popGrid(results, options, callback) {
         var count = results.length;
         var startIndex = options.pageIndex * options.pageSize;
@@ -69,6 +71,7 @@
         var start = startIndex + 1;
         data = results.slice(startIndex, endIndex);
 
+        // Add View Details button for each data row returned.
         $.each(data, function (index, item) {
 
             item.ViewDetails = '<button type="button" class="btn btn-primary viewDetails" id="' + item.ID + '">View Details</button>';

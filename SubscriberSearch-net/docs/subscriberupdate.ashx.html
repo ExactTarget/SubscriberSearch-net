@@ -1,0 +1,243 @@
+<!DOCTYPE html />
+
+<html>
+<head>
+	<title>SubscriberUpdate.ashx.cs</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link href="nocco.css" rel="stylesheet" media="all" type="text/css" />
+	<script src="prettify.js" type="text/javascript"></script>
+</head>
+<body onLoad="prettyPrint()">
+	<div id="container">
+		<div id="background"></div>
+			<div id="jump_to">
+				Jump To &hellip;
+				<div id="jump_wrapper">
+					<div id="jump_page">
+							<a class="source" href="default.aspx.html">
+								Default.aspx.cs
+							</a>
+                            <a class="source" href="default.html">
+								Default.aspx
+							</a>
+                            <a class="source" href="datasource.html">
+								datasource.js
+							</a>
+							<a class="source" href="jwt.html">
+								JWT.cs
+							</a>
+							<a class="source" href="login.aspx.html">
+								Login.aspx.cs
+							</a>
+							<a class="source" href="logout.aspx.html">
+								Logout.aspx.cs
+							</a>
+							<a class="source" href="rest.html">
+								REST.cs
+							</a>
+							<a class="source" href="subscriberretrieve.ashx.html">
+								SubscriberRetrieve.ashx.cs
+							</a>
+							<a class="source" href="subscribersearch.ashx.html">
+								SubscriberSearch.ashx.cs
+							</a>
+							<a class="source" href="subscriberupdate.ashx.html">
+								SubscriberUpdate.ashx.cs
+							</a>
+					</div>
+				</div>
+			</div>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="docs">
+						<h1>SubscriberUpdate.ashx.cs</h1>
+					</th>
+					<th class="code"></th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr id="section_1">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_1">&#182;</a>
+							</div>
+							
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Web.SessionState;
+using System.Text;
+
+using SubscriberSearch_net.ExactTargetClient;
+
+namespace SubscriberSearch_net
+{
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_2">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_2">&#182;</a>
+							</div>
+							<p>Summary description for SubscriberUpdate</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>    public class SubscriberUpdate : IHttpHandler, IReadOnlySessionState 
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+
+            try
+            {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_3">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_3">&#182;</a>
+							</div>
+							<p>Local Variables</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                string uRequestID = String.Empty;
+                string uStatus = String.Empty;
+                String SOAPEndPoint = context.Session[&quot;SOAPEndPoint&quot;].ToString();
+                String internalOauthToken = context.Session[&quot;internalOauthToken&quot;].ToString();
+                String id = context.Request.QueryString[&quot;id&quot;].ToString().Trim();
+                String status = context.Request.QueryString[&quot;status&quot;].ToString().Trim();
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_4">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_4">&#182;</a>
+							</div>
+							<p>Create the SOAP binding for call.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                BasicHttpBinding binding = new BasicHttpBinding();
+                binding.Name = &quot;UserNameSoapBinding&quot;;
+                binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+                binding.MaxReceivedMessageSize = 2147483647;
+                var client = new SoapClient(binding, new EndpointAddress(new Uri(SOAPEndPoint)));
+                client.ClientCredentials.UserName.UserName = &quot;*&quot;;
+                client.ClientCredentials.UserName.Password = &quot;*&quot;;
+
+                using (var scope = new OperationContextScope(client.InnerChannel))
+                {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_5">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_5">&#182;</a>
+							</div>
+							<p>Add oAuth token to SOAP header.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    XNamespace ns = &quot;http://exacttarget.com&quot;;
+                    var oauthElement = new XElement(ns + &quot;oAuthToken&quot;, internalOauthToken);
+                    var xmlHeader = MessageHeader.CreateHeader(&quot;oAuth&quot;, &quot;http://exacttarget.com&quot;, oauthElement);
+                    OperationContext.Current.OutgoingMessageHeaders.Add(xmlHeader);
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_6">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_6">&#182;</a>
+							</div>
+							<p>Set up Subscriber Object to pass fields for updating.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    Subscriber sub = new Subscriber();
+                    sub.ID = int.Parse(id);
+                    sub.IDSpecified = true;
+                    if (status.ToLower() == &quot;unsubscribed&quot;)
+                        sub.Status = SubscriberStatus.Unsubscribed;
+                    else
+                        sub.Status = SubscriberStatus.Active;
+                    sub.StatusSpecified = true;
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_7">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_7">&#182;</a>
+							</div>
+							<p>Call the Update method on the Subscriber object.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    UpdateResult[] uResults = client.Update(new UpdateOptions(), new APIObject[] { sub }, out uRequestID, out uStatus);
+
+                    if (uResults != null &amp;&amp; uStatus.ToLower().Equals(&quot;ok&quot;))
+                    {
+                        String strResults = string.Empty;
+                        strResults += uResults;
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_8">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_8">&#182;</a>
+							</div>
+							<p>Return the update results from handler.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                        context.Response.Write(strResults);
+                    }
+                    else
+                    {
+                        context.Response.Write(&quot;Not OK!&quot;);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                context.Response.Write(ex);
+            }
+        } 
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}
+</code></pre>
+						</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

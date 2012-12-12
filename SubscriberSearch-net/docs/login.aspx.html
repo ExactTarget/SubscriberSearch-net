@@ -1,0 +1,193 @@
+<!DOCTYPE html />
+
+<html>
+<head>
+	<title>Login.aspx.cs</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link href="nocco.css" rel="stylesheet" media="all" type="text/css" />
+	<script src="prettify.js" type="text/javascript"></script>
+</head>
+<body onLoad="prettyPrint()">
+	<div id="container">
+		<div id="background"></div>
+			<div id="jump_to">
+				Jump To &hellip;
+				<div id="jump_wrapper">
+					<div id="jump_page">
+							<a class="source" href="default.aspx.html">
+								Default.aspx.cs
+							</a>
+                            <a class="source" href="default.html">
+								Default.aspx
+							</a>
+                            <a class="source" href="datasource.html">
+								datasource.js
+							</a>
+							<a class="source" href="jwt.html">
+								JWT.cs
+							</a>
+							<a class="source" href="login.aspx.html">
+								Login.aspx.cs
+							</a>
+							<a class="source" href="logout.aspx.html">
+								Logout.aspx.cs
+							</a>
+							<a class="source" href="rest.html">
+								REST.cs
+							</a>
+							<a class="source" href="subscriberretrieve.ashx.html">
+								SubscriberRetrieve.ashx.cs
+							</a>
+							<a class="source" href="subscribersearch.ashx.html">
+								SubscriberSearch.ashx.cs
+							</a>
+							<a class="source" href="subscriberupdate.ashx.html">
+								SubscriberUpdate.ashx.cs
+							</a>
+					</div>
+				</div>
+			</div>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="docs">
+						<h1>Login.aspx.cs</h1>
+					</th>
+					<th class="code"></th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr id="section_1">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_1">&#182;</a>
+							</div>
+							
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using Newtonsoft.Json.Linq;
+
+namespace SubscriberSearch_net
+{
+    public partial class Login : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                lblMessage.Text = &quot;&quot;;
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_2">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_2">&#182;</a>
+							</div>
+							<p>Input the Application Signature (Secret) from App Center into the web.config file for use here.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                string applicationSecret = ConfigurationManager.AppSettings[&quot;applicationSecret&quot;].Trim();
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_3">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_3">&#182;</a>
+							</div>
+							<p>Signed request posted from IMH.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                string encodedJWT = Request.Form[&quot;jwt&quot;];
+               
+                if (encodedJWT.Trim().Length &gt; 0)
+                {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_4">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_4">&#182;</a>
+							</div>
+							<p>Decoded request using JWT.cs in the project that leverages https://github.com/johnsheehan/jwt.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    String decodedJWT = JsonWebToken.Decode(encodedJWT, applicationSecret);
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_5">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_5">&#182;</a>
+							</div>
+							<p>Store encoded and decoded JWT in sesssion variables for step 1 display only.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    Session[&quot;EncodedJWT&quot;] = encodedJWT.Trim();
+                    Session[&quot;DecodedJWT&quot;] = decodedJWT.Trim();
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_6">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_6">&#182;</a>
+							</div>
+							<p>Parsed request into JSON object using Newtonsoft.Json.Linq library in bin folder.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    JObject parsedJWT = JObject.Parse(decodedJWT);
+                    Session[&quot;internalOauthToken&quot;] = parsedJWT[&quot;request&quot;][&quot;user&quot;][&quot;internalOauthToken&quot;].Value&lt;string&gt;().Trim();
+                    Session[&quot;oauthToken&quot;] = parsedJWT[&quot;request&quot;][&quot;user&quot;][&quot;oauthToken&quot;].Value&lt;string&gt;().Trim();
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_7">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_7">&#182;</a>
+							</div>
+							<p>Redirect to the application redirectURL specified in App Center.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    Response.Redirect(parsedJWT[&quot;request&quot;][&quot;application&quot;][&quot;redirectUrl&quot;].Value&lt;string&gt;().Trim());
+                }
+                else
+                    lblMessage.Text = &quot;JWT not provided!&quot;;
+            }
+            catch (Exception ex)
+            {
+                lblMessage.Text = &quot;Error Occurred: &quot; + ex.Message;
+            }
+        }
+    }
+}
+</code></pre>
+						</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>  <html> <head>   <title>Default.aspx</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> <script src="prettify.js" type="text/javascript"></script> </head> <body onLoad="prettyPrint()">   <div id="container">     <div id="background"></div>  <div id="jump_to">
+				Jump To &hellip;
+				<div id="jump_wrapper">
+					<div id="jump_page">
+							<a class="source" href="default.aspx.html">
+								Default.aspx.cs
+							</a>
+                            <a class="source" href="default.html">
+								Default.aspx
+							</a>
+                            <a class="source" href="datasource.html">
+								datasource.js
+							</a>
+							<a class="source" href="jwt.html">
+								JWT.cs
+							</a>
+							<a class="source" href="login.aspx.html">
+								Login.aspx.cs
+							</a>
+							<a class="source" href="logout.aspx.html">
+								Logout.aspx.cs
+							</a>
+							<a class="source" href="rest.html">
+								REST.cs
+							</a>
+							<a class="source" href="subscriberretrieve.ashx.html">
+								SubscriberRetrieve.ashx.cs
+							</a>
+							<a class="source" href="subscribersearch.ashx.html">
+								SubscriberSearch.ashx.cs
+							</a>
+							<a class="source" href="subscriberupdate.ashx.html">
+								SubscriberUpdate.ashx.cs
+							</a>
+					</div>
+				</div>
+			</div>        <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Default.aspx             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="err">﻿</span><span class="o">&lt;%</span><span class="err">@</span> <span class="nx">Page</span> <span class="nx">Language</span><span class="o">=</span><span class="s2">&quot;C#&quot;</span> <span class="nx">AutoEventWireup</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">CodeBehind</span><span class="o">=</span><span class="s2">&quot;Default.aspx.cs&quot;</span> <span class="nx">Inherits</span><span class="o">=</span><span class="s2">&quot;SubscriberSearch_net.Default&quot;</span> <span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">html</span> <span class="nx">xmlns</span><span class="o">=</span><span class="s2">&quot;http://www.w3.org/1999/xhtml&quot;</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fuelux&quot;</span><span class="o">&gt;</span>
+<span class="c">&lt;!--</span> <span class="nx">Lines</span> <span class="nx">above</span> <span class="nx">specifies</span> <span class="nx">HTML</span> <span class="mi">5</span> <span class="nx">doctype</span> <span class="nx">and</span> <span class="nx">apply</span> <span class="nx">the</span> <span class="nx">fuelux</span> <span class="kr">class</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">entire</span> <span class="nx">page</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="nx">head</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;Head1&quot;</span> <span class="nx">runat</span><span class="o">=</span><span class="s2">&quot;server&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">SubscriberSearch</span><span class="o">-</span><span class="nx">net</span><span class="o">:</span> <span class="nx">Default</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">http</span><span class="o">-</span><span class="nx">equiv</span><span class="o">=</span><span class="s2">&quot;X-UA-Compatible&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;IE=edge,chrome=1&quot;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;viewport&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;width=device-width,initial-scale=1&quot;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;description&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;DotNet-C# FuelUX based App&quot;</span> <span class="o">/&gt;</span>
+
+    <span class="c">&lt;!--</span> <span class="nx">Fuel</span> <span class="nx">UX</span> <span class="nx">includes</span> <span class="nx">and</span> <span class="nx">script</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">page</span> <span class="nx">below</span> <span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">Review</span> <span class="nx">code</span><span class="p">.</span><span class="nx">exacttarget</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">devcenter</span><span class="o">/</span><span class="nx">fuel</span><span class="o">-</span><span class="nx">ux</span> <span class="nx">and</span> <span class="nx">code</span><span class="p">.</span><span class="nx">exacttarget</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">devcenter</span><span class="o">/</span><span class="nx">fuel</span><span class="o">-</span><span class="nx">ux</span><span class="o">/</span><span class="nx">getting</span><span class="o">-</span><span class="nx">started</span> <span class="o">--&gt;</span>
+    <span class="c">&lt;!--</span> <span class="nx">Fuel</span> <span class="nx">UX</span> <span class="nx">IMH</span> <span class="nx">Theme</span> <span class="nx">CSS</span> <span class="nx">refernces</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://fuelcdn.com/fuelux-imh/2.1/css/fuelux.css&quot;</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;stylesheet&quot;</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://fuelcdn.com/fuelux-imh/2.1/css/fuelux-responsive.css&quot;</span> <span class="nx">rel</span><span class="o">=</span><span class="s2">&quot;stylesheet&quot;</span> <span class="o">/&gt;</span>
+
+    <span class="c">&lt;!--</span> <span class="nx">Include</span> <span class="nx">the</span> <span class="nx">data</span> <span class="nx">source</span> <span class="nx">javascript</span> <span class="nx">file</span> <span class="k">for</span> <span class="nx">populating</span> <span class="nx">the</span> <span class="nx">Fuel</span> <span class="nx">UX</span> <span class="nx">datagrid</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;datasource.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt; </span>
+
+    <span class="c">&lt;!--</span> <span class="nx">Includes</span> <span class="nx">to</span> <span class="nx">support</span> <span class="nx">Fuel</span> <span class="nx">UX</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://fuelcdn.com/fuelux-imh/2.1/loader.min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+
+    <span class="c">&lt;!--</span> <span class="nx">Logic</span> <span class="k">for</span> <span class="nx">Datagrid</span> <span class="o">--&gt;</span>
+  <span class="o">&lt;</span><span class="nx">script</span>  <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+
+    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Instantiate the data source (datasource.js) and specify columns.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">dataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SubscriberSearchDataSource</span><span class="p">({</span>
+            <span class="nx">columns</span><span class="o">:</span> <span class="p">[{</span>
+                <span class="nx">property</span><span class="o">:</span> <span class="s1">&#39;EmailAddress&#39;</span><span class="p">,</span>
+                <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;Email Address&#39;</span><span class="p">,</span>
+                <span class="nx">sortable</span><span class="o">:</span> <span class="kc">false</span>
+            <span class="p">},</span> <span class="p">{</span>
+                <span class="nx">property</span><span class="o">:</span> <span class="s1">&#39;SubscriberKey&#39;</span><span class="p">,</span>
+                <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;Subscriber Key&#39;</span><span class="p">,</span>
+                <span class="nx">sortable</span><span class="o">:</span> <span class="kc">false</span>
+            <span class="p">},</span> <span class="p">{</span>
+          <span class="nx">property</span><span class="o">:</span> <span class="s1">&#39;ViewDetails&#39;</span><span class="p">,</span>
+          <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+          <span class="nx">sortable</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span> <span class="p">{</span>
+          <span class="nx">property</span><span class="o">:</span> <span class="s1">&#39;Status&#39;</span><span class="p">,</span>
+          <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;Status&#39;</span><span class="p">,</span>
+          <span class="nx">sortable</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span> <span class="p">],</span>
+            <span class="nx">delay</span><span class="o">:</span> <span class="mi">250</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Associate data source to data grid.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#subscriberGrid&#39;</span><span class="p">).</span><span class="nx">datagrid</span><span class="p">({</span>
+            <span class="nx">dataSource</span><span class="o">:</span> <span class="nx">dataSource</span><span class="p">,</span>
+            <span class="nx">renderData</span><span class="o">:</span> <span class="kc">true</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>When View Details button is clicked, call handler to retrieve specific subscriber using SOAP API.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.viewDetails&#39;</span><span class="p">).</span><span class="nx">live</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">$url</span> <span class="o">=</span> <span class="s2">&quot;/SubscriberRetrieve.ashx?id=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span> <span class="nx">url</span><span class="o">:</span> <span class="nx">$url</span><span class="p">,</span>
+
+                <span class="nx">complete</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">sub</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">subscribers</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#subscriberDetails&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&lt;dl&gt; &lt;dt&gt;Email&lt;/dt&gt; &lt;dd&gt;&#39;</span> <span class="o">+</span> <span class="nx">sub</span><span class="p">.</span><span class="nx">EmailAddress</span> <span class="o">+</span> <span class="s1">&#39;&lt;/dd&gt; &lt;dt&gt;Subscriber Key&lt;/dt&gt; &lt;dd&gt;&#39;</span> <span class="o">+</span> <span class="nx">sub</span><span class="p">.</span><span class="nx">SubscriberKey</span> <span class="o">+</span> <span class="s1">&#39;&lt;/dd&gt; &lt;dt&gt;Created&lt;/dt&gt; &lt;dd&gt;&#39;</span> <span class="o">+</span> <span class="nx">sub</span><span class="p">.</span><span class="nx">CreatedDate</span> <span class="o">+</span> <span class="s1">&#39;&lt;/dd&gt; &lt;dt&gt;Status&lt;/dt&gt;&lt;/dl&gt;&lt;div id=&quot;statusCombo&quot; class=&quot;input-append dropdown combobox&quot; style=&quot;width: 80%; margin-top: 0;&quot;&gt; &lt;input class=&quot;span2&quot; style=&quot;width: 50%;&quot; id=&quot;statusValue&quot; type=&quot;text&quot; value=&quot;&#39;</span> <span class="o">+</span> <span class="nx">sub</span><span class="p">.</span><span class="nx">Status</span> <span class="o">+</span> <span class="s1">&#39;&quot;&gt;&lt;button class=&quot;btn&quot; data-toggle=&quot;dropdown&quot;&gt;&lt;i class=&quot;caret&quot;&gt;&lt;/i&gt;&lt;/button&gt; &lt;ul class=&quot;dropdown-menu&quot;&gt; &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Active&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Unsubscribed&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;&lt;button class=&quot;btn btn-primary pull-right saveStatus&quot; id=&quot;&#39;</span> <span class="o">+</span> <span class="nx">sub</span><span class="p">.</span><span class="nx">ID</span> <span class="o">+</span> <span class="s1">&#39;&quot;&gt;Update Status&lt;/button&gt;&lt;/div&gt;&#39;</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>When Save button is clicked, call handler to update specific subscriber using SOAP API.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.saveStatus&#39;</span><span class="p">).</span><span class="nx">live</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">$url</span> <span class="o">=</span> <span class="s2">&quot;/SubscriberUpdate.ashx?id=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot;&amp;status=&quot;</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#statusValue&#39;</span><span class="p">).</span><span class="nx">combobox</span><span class="p">().</span><span class="nx">val</span><span class="p">();</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span> <span class="nx">url</span><span class="o">:</span> <span class="nx">$url</span><span class="p">,</span>
+
+                <span class="nx">complete</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Once the update is complete, refresh the grid.</p>             </td>             <td class="code">               <div class="highlight"><pre>                    <span class="kd">var</span> <span class="nx">$gridsearch</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s1">&#39;#subscriberGrid&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.search&#39;</span><span class="p">);</span>
+                    <span class="kd">var</span> <span class="nx">search</span> <span class="o">=</span> <span class="nx">$gridsearch</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+                    <span class="nx">$gridsearch</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;searched&#39;</span><span class="p">,</span> <span class="s2">&quot;_RELOAD&quot;</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">});</span>
+    <span class="p">});</span> 
+  <span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="err">/head&gt;</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;form1&quot;</span> <span class="nx">runat</span><span class="o">=</span><span class="s2">&quot;server&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+        <span class="c">&lt;!--</span> <span class="nx">DATAGRID</span> <span class="nx">MARKUP</span> <span class="o">--&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;app-nav&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;navbar navbar-inverse navbar-fixed-top&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;navbar-inner&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;container-fluid&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;/&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;brand&quot;</span><span class="o">&gt;</span><span class="p">.</span><span class="nx">NET</span><span class="p">(</span><span class="nx">C</span><span class="err">#</span><span class="p">)</span> <span class="nx">Version</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;primary&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;container-fluid&quot;</span><span class="o">&gt;&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;row-fluid&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;subscriberDetailsContainer&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;span3&quot;</span><span class="o">&gt;&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;well&quot;</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Subscriber</span> <span class="nx">Details</span><span class="o">&lt;</span><span class="err">/h1&gt;</span>
+          <span class="o">&lt;</span><span class="nx">p</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;detailsMsg&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;text-info&quot;</span><span class="o">&gt;</span><span class="nx">Please</span> <span class="nx">search</span> <span class="k">for</span> <span class="nx">subscribers</span><span class="p">,</span> <span class="nx">then</span> <span class="nx">click</span> <span class="nx">the</span> <span class="s2">&quot;View Details&quot;</span> <span class="nx">button</span> <span class="k">for</span> <span class="nx">a</span> <span class="nx">subscriber</span> <span class="nx">from</span> <span class="nx">the</span> <span class="nx">grid</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+          <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;subscriberDetails&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;span9&quot;</span><span class="o">&gt;&lt;</span><span class="nx">table</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;subscriberGrid&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;table table-bordered datagrid&quot;</span> <span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="nx">th</span> <span class="nx">colspan</span><span class="o">=</span><span class="s2">&quot;4&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;datagrid-header-title&quot;</span><span class="o">&gt;</span><span class="nx">Subscriber</span> <span class="nx">Listings</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;datagrid-header-left&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;datagrid-header-right&quot;</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;input-append search&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;subscriberSearch&quot;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;Search for subscribers&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;input-medium&quot;</span><span class="o">&gt;&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn&quot;</span><span class="o">&gt;&lt;</span><span class="nx">i</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;icon-search&quot;</span><span class="o">&gt;&lt;</span><span class="err">/i&gt;&lt;/button&gt;</span>
+                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="err">/div&gt;</span>
+              <span class="o">&lt;</span><span class="err">/th&gt;</span>
+            <span class="o">&lt;</span><span class="err">/tr&gt;</span>
+            <span class="o">&lt;</span><span class="nx">tfoot</span><span class="o">&gt;</span>
+              <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">th</span><span class="o">&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;datagrid-footer-left&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;display:none;&quot;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-controls&quot;</span><span class="o">&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-start&quot;</span><span class="o">&gt;&lt;</span><span class="err">/span&gt; - &lt;span class=&quot;grid-end&quot;&gt;&lt;/span&gt; of</span>
+                      <span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-count&quot;</span><span class="o">&gt;&lt;</span><span class="err">/span&gt;&lt;/span&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">select</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-pagesize&quot;</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">10</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">20</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">50</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">option</span><span class="o">&gt;</span><span class="mi">100</span><span class="o">&lt;</span><span class="err">/option&gt;</span>
+                      <span class="o">&lt;</span><span class="err">/select&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="nx">Per</span> <span class="nx">Page</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
+                    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;datagrid-footer-right&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;display:none;&quot;</span><span class="o">&gt;</span>
+                    <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-pager&quot;</span><span class="o">&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn grid-prevpage&quot;</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">i</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;icon-chevron-left&quot;</span><span class="o">&gt;&lt;</span><span class="err">/i&gt;</span>
+                      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="nx">Page</span><span class="o">&lt;</span><span class="err">/span&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;input-append dropdown combobox&quot;</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;span1&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">toggle</span><span class="o">=</span><span class="s2">&quot;dropdown&quot;</span><span class="o">&gt;</span>
+                          <span class="o">&lt;</span><span class="nx">i</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;caret&quot;</span><span class="o">&gt;&lt;</span><span class="err">/i&gt;</span>
+                        <span class="o">&lt;</span><span class="err">/button&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">ul</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;dropdown-menu&quot;</span><span class="o">&gt;&lt;</span><span class="err">/ul&gt;</span>
+                      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="nx">of</span> <span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;grid-pages&quot;</span><span class="o">&gt;&lt;</span><span class="err">/span&gt;&lt;/span&gt;</span>
+                      <span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn grid-nextpage&quot;</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="nx">i</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;icon-chevron-right&quot;</span><span class="o">&gt;&lt;</span><span class="err">/i&gt;</span>
+                      <span class="o">&lt;</span><span class="err">/button&gt;</span>
+                    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+                <span class="o">&lt;</span><span class="err">/th&gt;</span>
+              <span class="o">&lt;</span><span class="err">/tr&gt;</span>
+            <span class="o">&lt;</span><span class="err">/tfoot&gt;</span>
+          <span class="o">&lt;</span><span class="err">/table&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;     </span>
+      <span class="c">&lt;!--</span> <span class="nx">END</span> <span class="nx">DATAGRID</span> <span class="nx">MARKUP</span> <span class="o">--&gt;</span>
+    <span class="o">&lt;</span><span class="err">/form&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="o">&lt;</span><span class="err">/html&gt;</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

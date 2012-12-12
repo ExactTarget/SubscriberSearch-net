@@ -1,0 +1,311 @@
+<!DOCTYPE html />
+
+<html>
+<head>
+	<title>SubscriberRetrieve.ashx.cs</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link href="nocco.css" rel="stylesheet" media="all" type="text/css" />
+	<script src="prettify.js" type="text/javascript"></script>
+</head>
+<body onLoad="prettyPrint()">
+	<div id="container">
+		<div id="background"></div>
+			<div id="jump_to">
+				Jump To &hellip;
+				<div id="jump_wrapper">
+					<div id="jump_page">
+							<a class="source" href="default.aspx.html">
+								Default.aspx.cs
+							</a>
+                            <a class="source" href="default.html">
+								Default.aspx
+							</a>
+                            <a class="source" href="datasource.html">
+								datasource.js
+							</a>
+							<a class="source" href="jwt.html">
+								JWT.cs
+							</a>
+							<a class="source" href="login.aspx.html">
+								Login.aspx.cs
+							</a>
+							<a class="source" href="logout.aspx.html">
+								Logout.aspx.cs
+							</a>
+							<a class="source" href="rest.html">
+								REST.cs
+							</a>
+							<a class="source" href="subscriberretrieve.ashx.html">
+								SubscriberRetrieve.ashx.cs
+							</a>
+							<a class="source" href="subscribersearch.ashx.html">
+								SubscriberSearch.ashx.cs
+							</a>
+							<a class="source" href="subscriberupdate.ashx.html">
+								SubscriberUpdate.ashx.cs
+							</a>
+					</div>
+				</div>
+			</div>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="docs">
+						<h1>SubscriberRetrieve.ashx.cs</h1>
+					</th>
+					<th class="code"></th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr id="section_1">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_1">&#182;</a>
+							</div>
+							
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Web.SessionState;
+
+using SubscriberSearch_net.ExactTargetClient;
+
+namespace SubscriberSearch_net
+{
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_2">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_2">&#182;</a>
+							</div>
+							<p>Summary description for SubscriberRetrieve</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>    public class SubscriberRetrieve : IHttpHandler, IReadOnlySessionState 
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+
+            try
+            {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_3">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_3">&#182;</a>
+							</div>
+							<p>Local Variables</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                APIObject[] results = null;
+                String requestId = null;
+                String SOAPEndPoint = context.Session[&quot;SOAPEndPoint&quot;].ToString();
+                String internalOauthToken = context.Session[&quot;internalOauthToken&quot;].ToString();
+                String id = context.Request.QueryString[&quot;id&quot;].ToString().Trim();
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_4">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_4">&#182;</a>
+							</div>
+							<p>Create the SOAP binding for call.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                BasicHttpBinding binding = new BasicHttpBinding();
+                binding.Name = &quot;UserNameSoapBinding&quot;;
+                binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+                binding.MaxReceivedMessageSize = 2147483647;
+                var client = new SoapClient(binding, new EndpointAddress(new Uri(SOAPEndPoint)));
+                client.ClientCredentials.UserName.UserName = &quot;*&quot;;
+                client.ClientCredentials.UserName.Password = &quot;*&quot;;
+
+                using (var scope = new OperationContextScope(client.InnerChannel))
+                {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_5">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_5">&#182;</a>
+							</div>
+							<p>Add oAuth token to SOAP header.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    XNamespace ns = &quot;http://exacttarget.com&quot;;
+                    var oauthElement = new XElement(ns + &quot;oAuthToken&quot;, internalOauthToken);
+                    var xmlHeader = MessageHeader.CreateHeader(&quot;oAuth&quot;, &quot;http://exacttarget.com&quot;, oauthElement);
+                    OperationContext.Current.OutgoingMessageHeaders.Add(xmlHeader);
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_6">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_6">&#182;</a>
+							</div>
+							<p>Setup RetrieveRequest for Subscriber object.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    RetrieveRequest retrieveRequest = new RetrieveRequest();
+                    retrieveRequest.ObjectType = &quot;Subscriber&quot;; //Object Type to retrieve
+                    String[] props = { &quot;ID&quot;, &quot;EmailAddress&quot;, &quot;SubscriberKey&quot;, &quot;Status&quot;, &quot;CreatedDate&quot; };
+                    retrieveRequest.Properties = props;
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_7">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_7">&#182;</a>
+							</div>
+							<p>Query filter using SimpleFilter.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    SimpleFilterPart sfp = new SimpleFilterPart();
+                    sfp.Property = &quot;ID&quot;;
+                    sfp.SimpleOperator = SimpleOperators.equals;
+                    sfp.Value = new String[] { id };
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_8">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_8">&#182;</a>
+							</div>
+							<p>Use the SimpleFilter in RetrieveRequest</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    retrieveRequest.Filter = sfp;
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_9">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_9">&#182;</a>
+							</div>
+							<p>Retrieve the subscribers.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    String response = client.Retrieve(retrieveRequest, out requestId, out results);
+
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_10">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_10">&#182;</a>
+							</div>
+							<p>If any results are returned, loop through those results and convert to JSON.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                    if (response != null &amp;&amp; response.ToLower().Equals(&quot;ok&quot;))
+                    {
+                        String strResults = string.Empty;
+                        strResults += @&quot;{&quot;&quot;subscribers&quot;&quot;: [&quot;;
+
+                        if (results != null &amp;&amp; results.Length &gt; 0)
+                        {
+                            int i = 1;
+                            foreach (Subscriber sub in results)
+                            {
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_11">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_11">&#182;</a>
+							</div>
+							<p>Convert desired properties into JSON.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                                strResults += @&quot;{&quot;&quot;ID&quot;&quot;:&quot; + JsonConvert.SerializeObject(sub.ID.ToString()).ToString().Trim() + &quot;, &quot;;
+                                strResults += @&quot;&quot;&quot;EmailAddress&quot;&quot;:&quot; + JsonConvert.SerializeObject(sub.EmailAddress).ToString().Trim() + &quot;, &quot;;
+                                strResults += @&quot;&quot;&quot;SubscriberKey&quot;&quot;:&quot; + JsonConvert.SerializeObject(sub.SubscriberKey).ToString().Trim() + &quot;, &quot;;
+                                strResults += @&quot;&quot;&quot;Status&quot;&quot;:&quot; + JsonConvert.SerializeObject(sub.Status.ToString()).ToString().Trim() + &quot;, &quot;;
+                                strResults += @&quot;&quot;&quot;CreatedDate&quot;&quot;:&quot; + JsonConvert.SerializeObject(sub.CreatedDate.ToString()).ToString().Trim() + &quot; }&quot;;
+                                if (i &lt; results.Length)
+                                    strResults += &quot;, &quot;;
+                                i++;
+                            }
+                            strResults += &quot; ]}&quot;;
+</code></pre>
+						</td>
+					</tr>
+					<tr id="section_12">
+						<td class="docs">
+							<div class="pilwrap">
+								<a class="pilcrow" href="#section_12">&#182;</a>
+							</div>
+							<p>Return the resulting JSON from handler.</p>
+
+						</td>
+						<td class="code">
+							<pre><code class='prettyprint'>                            context.Response.Write(strResults);
+                        }
+                        else
+                            context.Response.Write(@&quot;{&quot;&quot;subscribers&quot;&quot;: []}&quot;);
+                    }
+                    else
+                    {
+                        context.Response.Write(@&quot;{&quot;&quot;subscribers&quot;&quot;: []}&quot;);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                context.Response.Write(ex);
+            }
+        } 
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}
+</code></pre>
+						</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

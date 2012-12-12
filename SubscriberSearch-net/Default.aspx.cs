@@ -15,14 +15,14 @@ namespace SubscriberSearch_net
         {
             try
             {
-                // If first time to page make the REST call to get the SOAP end point and post to Session variable
+                // If first time to page make the REST call to get the SOAP end point and post to Session variable.
                 if (!Page.IsPostBack)
                 {
-                    // Get access (oAuth) token store in session from Login page and make REST call (REST.cs)
+                    // Get access (oAuth) token store in session from Login page and make REST call (REST.cs).
                     String strAccessToken = System.Web.HttpContext.Current.Session["oauthToken"].ToString();
                     String strSOAPEndPoint = REST.REST_GetSOAPEndpointCall(strAccessToken);
 
-                    // Save SOAP EndPoint to session
+                    // Save SOAP EndPoint to session.
                     System.Web.HttpContext.Current.Session["SOAPEndPoint"] = strSOAPEndPoint.Trim();
                 }
             }

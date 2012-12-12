@@ -25,7 +25,7 @@ namespace SubscriberSearch_net
 
             try
             {
-                // Local Variables
+                // Local Variables.
                 string uRequestID = String.Empty;
                 string uStatus = String.Empty;
                 String SOAPEndPoint = context.Session["SOAPEndPoint"].ToString();
@@ -33,24 +33,24 @@ namespace SubscriberSearch_net
                 String id = context.Request.QueryString["id"].ToString().Trim();
                 String status = context.Request.QueryString["status"].ToString().Trim();
 
-                // Create the binding for using 
+                // Create the SOAP binding for call.
                 BasicHttpBinding binding = new BasicHttpBinding();
                 binding.Name = "UserNameSoapBinding";
                 binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
                 binding.MaxReceivedMessageSize = 2147483647;
-
                 var client = new SoapClient(binding, new EndpointAddress(new Uri(SOAPEndPoint)));
                 client.ClientCredentials.UserName.UserName = "*";
                 client.ClientCredentials.UserName.Password = "*";
 
                 using (var scope = new OperationContextScope(client.InnerChannel))
                 {
+                    // Add oAuth token to SOAP header.
                     XNamespace ns = "http://exacttarget.com";
                     var oauthElement = new XElement(ns + "oAuthToken", internalOauthToken);
                     var xmlHeader = MessageHeader.CreateHeader("oAuth", "http://exacttarget.com", oauthElement);
                     OperationContext.Current.OutgoingMessageHeaders.Add(xmlHeader);
 
-                    // Setup Subscriber Object
+                    // Setup Subscriber Object to pass fields for updating.
                     Subscriber sub = new Subscriber();
                     sub.ID = int.Parse(id);
                     sub.IDSpecified = true;
@@ -60,13 +60,14 @@ namespace SubscriberSearch_net
                         sub.Status = SubscriberStatus.Active;
                     sub.StatusSpecified = true;
 
-                    //Call the Update method on the Subscriber object
+                    // Call the Update method on the Subscriber object.
                     UpdateResult[] uResults = client.Update(new UpdateOptions(), new APIObject[] { sub }, out uRequestID, out uStatus);
 
                     if (uResults != null && uStatus.ToLower().Equals("ok"))
                     {
                         String strResults = string.Empty;
                         strResults += uResults;
+                        // Return the update results from handler.
                         context.Response.Write(strResults);
                     }
                     else

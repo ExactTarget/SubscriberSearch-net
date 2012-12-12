@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SubscriberSearch_net.Default" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" class="fuelux">
-<!-- Lines above specifies HTML 5 doctype and apply the fuelux class to the entire page -->
+<!-- Lines above specifies HTML 5 doctype and apply the fuelux class to the entire page. -->
 <head id="Head1" runat="server">
     <title>SubscriberSearch-net: Default</title>
     <meta charset="utf-8" />
@@ -9,22 +9,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="DotNet-C# FuelUX based App" />
 
-    <!-- Fuel UX includes and script for the page below -->
-    <!-- review code.exacttarget.com/devcenter/fuel-ux and code.exacttarget.com/devcenter/fuel-ux/getting-started -->
+    <!-- Fuel UX includes and script for the page below. -->
+    <!-- Review code.exacttarget.com/devcenter/fuel-ux and code.exacttarget.com/devcenter/fuel-ux/getting-started -->
+    <!-- Fuel UX IMH Theme CSS refernces. -->
     <link href="http://fuelcdn.com/fuelux-imh/2.1/css/fuelux.css" rel="stylesheet" />
     <link href="http://fuelcdn.com/fuelux-imh/2.1/css/fuelux-responsive.css" rel="stylesheet" />
 
+    <!-- Include the data source javascript file for populating the Fuel UX datagrid -->
     <script src="datasource.js" type="text/javascript"></script> 
 
+    <!-- Includes to support Fuel UX. -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
     <script src="http://fuelcdn.com/fuelux-imh/2.1/loader.min.js" type="text/javascript"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
 
-    <!-- Logic for Datagrid -->
+    <!-- Logic for Datagrid. -->
 	<script  type="text/javascript">
 
 		$(document).ready(function () {
 
+            // Instantiate the data source (datasource.js) and specify columns.
 		    var dataSource = new SubscriberSearchDataSource({
 		        columns: [{
 		            property: 'EmailAddress',
@@ -46,13 +50,13 @@
 		        delay: 250
 		    });
 
-
+            // Associate data source to data grid.
 		    $('#subscriberGrid').datagrid({
 		        dataSource: dataSource,
 		        renderData: true
 		    });
 
-
+            // When View Details button is clicked call handler to retrieve specific subscriber using SOAP API.
 		    $('.viewDetails').live('click', function () {
 		        var $url = "/SubscriberRetrieve.ashx?id=" + this.id;
 		        $.ajax({ url: $url,
@@ -66,12 +70,13 @@
 		        return false;
 		    });
 
+		    // When Save button is clicked call handler to update specific subscriber using SOAP API.
 		    $('.saveStatus').live('click', function () {
 		        var $url = "/SubscriberUpdate.ashx?id=" + this.id + "&status=" + $('#statusValue').combobox().val();
 		        $.ajax({ url: $url,
 
 		            complete: function (result) {
-		                // Once the update is complete, refresh the grid
+		                // Once the update is complete, refresh the grid.
 		                var $gridsearch = jQuery('#subscriberGrid').find('.search');
 		                var search = $gridsearch.find('input').val();
 		                $gridsearch.trigger('searched', "_RELOAD");
@@ -158,7 +163,6 @@
 		    </div>
 	    </div>	   
 	    <!-- END DATAGRID MARKUP -->
-        <!--<br /><asp:Label ID="lblMessage" runat="server" Text="testing123" Visible="true"></asp:Label><br />-->
     </form>
 </body>
 </html>
