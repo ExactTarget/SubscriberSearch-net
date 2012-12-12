@@ -15,9 +15,9 @@ Step2 - Added Fuel REST API request to platform service to store and display SOA
 
 Step3 - Added Fuel UX for the user interface styling 
 
-Step4 - Added Search functionality to datagrid using SOAP call through handler
+Step4 - Added search functionality to datagrid using SOAP call through handler
 
-Step5 - Coming Soon! Will add update subscriber functionality and SOAP call  
+Step5 - Added update subscriber functionality and SOAP call  
 
 #Requirements
 ----------
