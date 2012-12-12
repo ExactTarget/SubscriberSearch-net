@@ -35,12 +35,13 @@ Step5 - Added update subscriber functionality and SOAP call
 
 1. Clone the repo onto your server and deploy to internet facing location.
 2. Open the project or solution in .NET Studio and save. The project is setup to run debug mode at port 54847 in the project properties->web.
-3. Create a new Hub Exchange application in [App Center](http://code.exacttarget.com/appcenter) (requires login) naming it what you want. 
-4. If testing locally, for the Login URL, put the path to http://localhost:54847/Login.aspx.  For the Home URL, put the path to http://localhost:54847/Default.aspx.  For the Logout URL, put the path to http://localhost:54847/Logout.aspx. If hosting non locally enter the proper paths.
-5. Open web.config file and update the [applicationSecret] attribute value with the Application Signature that was made available in App Center after creating a Hub Exchange application. 
-6. If not testing locally, set up IIS/Web Server to properly host .NET web application. IIS Application pool will be .NET v2.0.
-7. Test the web application. Make sure the web app is running. Since the IMH is not passing the JWT that the application requires you should get a page that simply states "Error Occurred: Object reference not set to an instance of an object." That will let you know the web server is serving the page correctly.
-8. Go to [ExactTarget IMH](https://imh.exacttarget.com) and login to your ExactTarget account. Your application created in App Center should be in the IMH menu. Select it and accept any mixed security warnings if you receive them.
+3. Make sure the Login.aspx page is set as the start page by right clicking on it in the Solution Explorer and selecting the option.
+4. Create a new Hub Exchange application in [App Center](http://code.exacttarget.com/appcenter) (requires login) naming it what you want. 
+5. If testing locally, for the Login URL, put the path to http://localhost:54847/Login.aspx.  For the Home URL, put the path to http://localhost:54847/Default.aspx.  For the Logout URL, put the path to http://localhost:54847/Logout.aspx. If hosting non locally enter the proper paths.
+6. Open web.config file and update the [applicationSecret] attribute value with the Application Signature that was made available in App Center after creating a Hub Exchange application. 
+7. If not testing locally, set up IIS/Web Server to properly host .NET web application. IIS Application pool will be .NET v2.0.
+8. Test the web application. Make sure the web app is running. Since the IMH is not passing the JWT that the application requires you should get a page that simply states "Error Occurred: Object reference not set to an instance of an object." That will let you know the web server is serving the page correctly.
+9. Go to [ExactTarget IMH](https://imh.exacttarget.com) and login to your ExactTarget account. Your application created in App Center should be in the IMH menu. Select it and accept any mixed security warnings if you receive them.
 
 For more information about setting up an application in App Center, please see [App Center Overview](http://code.exacttarget.com/devcenter/getting-started/app-center-overview) and [Registering App](http://code.exacttarget.com/devcenter/devcenter/getting-started/app-center-overview/registering-app).
 
