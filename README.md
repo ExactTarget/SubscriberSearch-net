@@ -28,6 +28,7 @@ Step5 - Coming Soon! Will add update subscriber functionality and SOAP call
 #Notes
 ----------
 * Built with .NET Framework 3.5 in Microsoft Visual Web Developer 2010 Express
+* Documentation: Commented code and used Docco/Nocco to create docs folder from comments
 
 #Quick start
 -----------
